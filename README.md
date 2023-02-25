@@ -1,2 +1,3 @@
 # bezier-viewer
-get bezier function by points
+drag points to create bezier
+open this project by cocos creator 3.6.1
