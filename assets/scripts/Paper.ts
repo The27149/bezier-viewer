@@ -52,10 +52,12 @@ export class Paper extends Component {
 
     /**当前选中的控制点 */
     public curCtrlPoint: Point = null;
+    private curLineWidth: number = 1;
 
     onLoad() {
         this.canvasNode = director.getScene().getComponentInChildren(Canvas).node;
         this.addEvents();
+        this.curLineWidth = this.lineWidth;
         this.pointPool = new NodeFactory(this.pointPre);
         this.pointPool.init(this.sampleNum);
         this.randomDraw(3);
@@ -89,13 +91,15 @@ export class Paper extends Component {
     }
 
     private onMouseWheel(e: EventMouse) {
-        console.log('滚动：', e, e.getScrollX(), e.getScrollY());
+        // console.log('滚动：', e, e.getScrollX(), e.getScrollY());
         let long = e.getScrollY();
         //向上滚 放大
         let v_old = this.node.scale.x;
         let v = long > 0 ? v_old * 1.1 : v_old * 0.9;
         this.paperScale.string = v.toString();
         this.node.setScale(v, v);
+        this.curLineWidth = this.lineWidth * (1 / this.node.scale.x);
+        this.draw();
     }
 
     private randomDraw(stage: number = 3) {
@@ -175,7 +179,7 @@ export class Paper extends Component {
                 child.parent = this.ctrlContainer;
                 child.setSiblingIndex(i);
                 let ui = child.getComponent(UITransform);
-                ui.width = ui.height = this.lineWidth * 5;
+                ui.width = ui.height = this.curLineWidth * 5;
                 child.getComponent(Sprite).color = Color.YELLOW;
                 child.getComponent(Point).init(this);
             }
@@ -187,6 +191,7 @@ export class Paper extends Component {
     /**方式2： canvas2d绘制 */
     private drawLines(x: number, y: number, i: number) {
         let g = this.graphicsContainer.getComponent(Graphics);
+        g.lineWidth = this.curLineWidth;
         if (i === 0) {
             g.clear();
             g.moveTo(x, y);

@@ -150,7 +150,7 @@
     "_priority": 1073741824,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 658.7793427230047,
+    "_orthoHeight": 540,
     "_near": 0,
     "_far": 2000,
     "_color": {
@@ -543,7 +543,7 @@
       "b": 69,
       "a": 255
     },
-    "lineWidth": 3,
+    "lineWidth": 5,
     "sampleNum": 1000,
     "lineContainer": {
       "__id__": 6
